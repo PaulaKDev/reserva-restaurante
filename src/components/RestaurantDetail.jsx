@@ -1,21 +1,32 @@
 import React from 'react';
 import { useBooking } from '../context/useBooking';
 
+const formatDate = (date) => {
+  const formattedDate = new Date(`${date}T12:00:00`);
+
+  return new Intl.DateTimeFormat('es-ES', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  }).format(formattedDate);
+};
+
 export default function RestaurantDetail() {
-  const { 
-    restaurantInfo, 
-    selectedTime, 
-    guests, 
-    setCurrentStep 
-  } = useBooking();
+  const {
+  restaurantInfo,
+  selectedDate,
+  selectedTime,
+  guests,
+  setCurrentStep
+} = useBooking();
 
   return (
     <div className="card-panel">
       {/* 1. Imagen Superior / Galería */}
       <div className="hero-container">
-        <img 
+        <img
           src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80" 
-          alt={restaurantInfo.name} 
+          alt={restaurantInfo.name}
           className="hero-image"
         />
         <div className="hero-overlay-top">
@@ -55,7 +66,9 @@ export default function RestaurantDetail() {
             <span className="selector-label">📅 FECHA</span>
             <span className="selector-label">∨</span>
           </div>
-          <span className="selector-value">Sáb, 17 oct</span>
+          <span className="selector-value">
+            {formatDate(selectedDate)}
+          </span>
         </div>
 
         <div className="selector-card">
@@ -82,7 +95,7 @@ export default function RestaurantDetail() {
           <div>
             <p className="availability-status-title">Disponible</p>
             <p className="availability-status-details">
-              Sáb 17 oct · {selectedTime} · {guests} personas · Terraza
+              {formatDate(selectedDate)} · {selectedTime} · {guests} personas · Terraza
             </p>
           </div>
         </div>
