@@ -1,25 +1,18 @@
-// src/context/BookingContext.jsx
-
 import React, { createContext, useContext, useState } from 'react';
 import { TABLES, RESTAURANT_INFO } from '../data/mockLayout';
 
 const BookingContext = createContext();
 
 export const BookingProvider = ({ children }) => {
-  // Modos de vista para pruebas: 'client' | 'staff_mobile' | 'manager_pc'
   const [viewMode, setViewMode] = useState('client');
-
-  // Selección del cliente
   const [selectedDate, setSelectedDate] = useState('2026-10-17');
   const [selectedTime, setSelectedTime] = useState('21:00');
   const [guests, setGuests] = useState(2);
   const [selectedTable, setSelectedTable] = useState(TABLES.find(t => t.id === 'T6'));
-  const [currentStep, setCurrentStep] = useState('map'); // 'map' | 'checkout'
+  const [currentStep, setCurrentStep] = useState('map');
 
-  // Estado centralizado de las mesas
   const [tablesStatus, setTablesStatus] = useState(TABLES);
 
-  // Actualizar el estado de una mesa en tiempo real (simulando WebSockets)
   const updateTableStatus = (tableId, newStatus) => {
     setTablesStatus((prev) =>
       prev.map((t) => (t.id === tableId ? { ...t, status: newStatus } : t))
