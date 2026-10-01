@@ -1,8 +1,14 @@
+import Header from '../../components/Header';
+import RestaurantDetail from '../../components/RestaurantDetail';
+
 export default function CustomerHome() {
   return (
-    <main>
-      <h1>Cliente</h1>
-      <p>Página principal del cliente.</p>
-    </main>
+    <>
+      <Header />
+
+      <main>
+        <RestaurantDetail />
+      </main>
+    </>
   );
 }
