@@ -1,60 +1,37 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+// src/context/BookingContext.jsx
+
+import React, { createContext, useContext, useState } from 'react';
+import { TABLES, RESTAURANT_INFO } from '../data/mockLayout';
 
 const BookingContext = createContext();
 
 export const BookingProvider = ({ children }) => {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [selectedZone, setSelectedZone] = useState('salon');
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  // Modos de vista para pruebas: 'client' | 'staff_mobile' | 'manager_pc'
+  const [viewMode, setViewMode] = useState('client');
+
+  // Selección del cliente
+  const [selectedDate, setSelectedDate] = useState('2026-10-17');
   const [selectedTime, setSelectedTime] = useState('21:00');
   const [guests, setGuests] = useState(2);
-  const [selectedTable, setSelectedTable] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTable, setSelectedTable] = useState(TABLES.find(t => t.id === 'T6'));
+  const [currentStep, setCurrentStep] = useState('map'); // 'map' | 'checkout'
 
-  const [reservations, setReservations] = useState(() => {
-    const saved = localStorage.getItem('app_restaurant_reservations');
-    return saved ? JSON.parse(saved) : [
-      { id: 'res-1', tableId: 'T-01', date: new Date().toISOString().split('T')[0], time: '21:00', name: 'Juan Pérez', phone: '600112233', guests: 2, status: 'confirmada' }
-    ];
-  });
+  // Estado centralizado de las mesas
+  const [tablesStatus, setTablesStatus] = useState(TABLES);
 
-  useEffect(() => {
-    localStorage.setItem('app_restaurant_reservations', JSON.stringify(reservations));
-  }, [reservations]);
-
-  const getTableStatus = (tableId) => {
-    const exists = reservations.find(
-      (r) => r.tableId === tableId && r.date === selectedDate && r.time === selectedTime && r.status !== 'cancelada'
+  // Actualizar el estado de una mesa en tiempo real (simulando WebSockets)
+  const updateTableStatus = (tableId, newStatus) => {
+    setTablesStatus((prev) =>
+      prev.map((t) => (t.id === tableId ? { ...t, status: newStatus } : t))
     );
-    return exists ? 'ocupada' : 'disponible';
-  };
-
-  const addReservation = (bookingData) => {
-    const newReservation = {
-      id: `res-${Date.now()}`,
-      tableId: selectedTable.id,
-      date: selectedDate,
-      time: selectedTime,
-      guests,
-      status: 'confirmada',
-      ...bookingData,
-    };
-    setReservations((prev) => [...prev, newReservation]);
-    setIsModalOpen(false);
-    setSelectedTable(null);
-  };
-
-  const cancelReservation = (id) => {
-    setReservations((prev) => prev.filter((r) => r.id !== id));
   };
 
   return (
     <BookingContext.Provider
       value={{
-        isAdmin,
-        setIsAdmin,
-        selectedZone,
-        setSelectedZone,
+        viewMode,
+        setViewMode,
+        restaurantInfo: RESTAURANT_INFO,
         selectedDate,
         setSelectedDate,
         selectedTime,
@@ -63,12 +40,10 @@ export const BookingProvider = ({ children }) => {
         setGuests,
         selectedTable,
         setSelectedTable,
-        isModalOpen,
-        setIsModalOpen,
-        reservations,
-        getTableStatus,
-        addReservation,
-        cancelReservation,
+        currentStep,
+        setCurrentStep,
+        tablesStatus,
+        updateTableStatus,
       }}
     >
       {children}
