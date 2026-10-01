@@ -1,410 +1,8 @@
 /* ==========================================================================
-   SISTEMA DE DISEÑO Y GUÍA DE ESTILOS (Casa Mar)
-   ========================================================================== */
-
-:root {
-  /* --- PALETA DE COLORES (Figma) --- */
-  --bg-main: #FBF9F5;              /* Crema de fondo principal */
-  --text-dark: #2B231F;            /* Marrón chocolate para textos y títulos */
-  --text-muted: #6B5B52;           /* Texto secundario cálido */
-  --accent-terracota: #C17254;     /* Terracota para acciones primarias y selección */
-  --accent-terracota-dark: #A35A3E;/* Terracota para estados hover */
-  
-  --bg-card: #FFFFFF;              /* Fondo de tarjetas e interfaz */
-  --border-color: #EFE8DF;         /* Bordes finos y delimitadores */
-  
-  /* --- ESTADOS SVG DEL MAPA DE MESAS --- */
-  --table-available-bg: #FFFFFF;
-  --table-available-stroke: #7A9A95;
-  --table-occupied-bg: #E4D5C7;
-  --table-occupied-text: #6B5B52;
-  --table-selected-bg: #C17254;
-  --table-selected-text: #FFFFFF;
-  
-  /* --- FONDOS DE CONTENEDORES DE ZONA --- */
-  --zone-salon-bg: #F3EFEA;
-  --zone-terraza-bg: #EBF2EF;      /* Tono verdoso/arena suave */
-
-  /* --- TIPOGRAFÍAS --- */
-  --font-heading: 'Playfair Display', Georgia, serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-/* ==========================================================================
-   RESET Y REGLAS BASE
-   ========================================================================== */
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background-color: var(--bg-main);
-  color: var(--text-dark);
-  font-family: var(--font-body);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-}
-
-h1, h2, h3, h4, .font-serif {
-  font-family: var(--font-heading);
-  color: var(--text-dark);
-  font-weight: 700;
-}
-
-/* ==========================================================================
-   ESTRUCTURA Y CONTENEDORES
-   ========================================================================== */
-
-.app-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.main-content {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.5rem 1rem;
-}
-
-.card-panel {
-  background: var(--bg-card);
-  padding: 1.5rem;
-  border-radius: 20px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 4px 16px rgba(43, 35, 31, 0.03);
-  margin-bottom: 1.5rem;
-}
-
-.card-panel-title {
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-}
-
-.card-panel-title-center {
-  font-size: 1.4rem;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.card-subtitle {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
-}
-
-/* ==========================================================================
-   HEADER Y SELECTOR DE ENTORNO MULTI-DISPOSITIVO
-   ========================================================================== */
-
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
-  background-color: var(--bg-card);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.mode-selector {
-  display: flex;
-  gap: 0.5rem;
-  background-color: var(--bg-main);
-  padding: 0.3rem;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-}
-
-.mode-btn {
-  padding: 0.5rem 0.9rem;
-  border: none;
-  border-radius: 7px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  background: transparent;
-  color: var(--text-muted);
-  transition: all 0.2s ease;
-}
-
-.mode-btn.active {
-  background-color: var(--accent-terracota);
-  color: #FFFFFF;
-  box-shadow: 0 2px 6px rgba(193, 114, 84, 0.3);
-}
-
-/* ==========================================================================
-   MAPA SVG Y ESTADOS DE MESAS
-   ========================================================================== */
-
-.zone-box {
-  border-radius: 16px;
-  padding: 1rem;
-  margin-bottom: 1.2rem;
-}
-
-.zone-box.salon {
-  background-color: var(--zone-salon-bg);
-}
-
-.zone-box.terraza {
-  background-color: var(--zone-terraza-bg);
-}
-
-.zone-title {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  margin-bottom: 0.8rem;
-  display: block;
-  text-transform: uppercase;
-}
-
-.map-svg-element {
-  width: 100%;
-}
-
-/* Agrupaciones e interactividad en SVG */
-.table-group.cursor-pointer {
-  cursor: pointer;
-}
-
-.table-group.cursor-not-allowed {
-  cursor: not-allowed;
-}
-
-/* Estado Disponible */
-.table-group.table-available .table-shape {
-  fill: var(--table-available-bg);
-  stroke: var(--table-available-stroke);
-  stroke-width: 2px;
-}
-
-.table-group.table-available text {
-  fill: var(--text-dark);
-}
-
-/* Estado Ocupada */
-.table-group.table-occupied .table-shape {
-  fill: var(--table-occupied-bg);
-  stroke: transparent;
-}
-
-.table-group.table-occupied text {
-  fill: var(--table-occupied-text);
-}
-
-/* Estado Seleccionada */
-.table-group.table-selected .table-shape {
-  fill: var(--table-selected-bg);
-  stroke: transparent;
-}
-
-.table-group.table-selected text {
-  fill: var(--table-selected-text);
-}
-
-.table-text-id {
-  font-size: 13px;
-  font-weight: bold;
-}
-
-.table-text-seats {
-  font-size: 10px;
-}
-
-.selected-info-box {
-  background-color: var(--zone-salon-bg);
-  padding: 1rem;
-  border-radius: 12px;
-  margin-top: 1rem;
-}
-
-.selected-info-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-}
-
-.selected-info-text {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-top: 0.2rem;
-}
-
-.selection-summary-text {
-  margin: 0.5rem 0 1.5rem 0;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-}
-
-/* ==========================================================================
-   DESGLOSE TRANSPARENTE Y PAGO
-   ========================================================================== */
-
-.breakdown-box {
-  background-color: var(--zone-salon-bg);
-  padding: 1.2rem;
-  border-radius: 14px;
-  margin-bottom: 1.5rem;
-}
-
-.breakdown-title {
-  font-size: 1.1rem;
-  margin-bottom: 0.8rem;
-}
-
-.breakdown-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  margin-bottom: 0.4rem;
-  color: var(--text-dark);
-}
-
-.breakdown-divider {
-  border: none;
-  border-top: 1px solid var(--border-color);
-  margin: 0.8rem 0;
-}
-
-.breakdown-row.total {
-  font-weight: 700;
-  font-size: 1.05rem;
-}
-
-.total-price {
-  font-size: 1.25rem;
-  color: var(--accent-terracota);
-}
-
-.payment-note {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
-}
-
-/* ==========================================================================
-   VISTAS DE CAMAREROS Y MANAGER
-   ========================================================================== */
-
-.staff-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.staff-card {
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-card);
-  text-align: center;
-}
-
-.staff-card.occupied {
-  background-color: var(--table-occupied-bg);
-}
-
-.staff-status-text {
-  font-size: 0.8rem;
-  margin: 0.4rem 0;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.dashboard-stats {
-  display: flex;
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
-
-.stat-box {
-  flex: 1;
-  background-color: var(--zone-salon-bg);
-  padding: 1.2rem;
-  border-radius: 14px;
-}
-
-.stat-value-accent {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--accent-terracota);
-  margin-top: 0.3rem;
-}
-
-.stat-value-dark {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--text-dark);
-  margin-top: 0.3rem;
-}
-
-/* ==========================================================================
-   BOTONES
-   ========================================================================== */
-
-.btn-primary {
-  width: 100%;
-  padding: 1rem;
-  background-color: var(--text-dark);
-  color: #FFFFFF;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.btn-primary:hover {
-  background-color: #000000;
-}
-
-.btn-action-sm {
-  padding: 0.4rem 0.7rem;
-  font-size: 0.75rem;
-  border-radius: 6px;
-  border: none;
-  background-color: var(--accent-terracota);
-  color: #FFFFFF;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-link {
-  width: 100%;
-  background: transparent;
-  border: none;
-  margin-top: 1rem;
-  cursor: pointer;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-/* ==========================================================================
-   RESPONSIVE
-   ========================================================================== */
-
-@media (min-width: 900px) {
-  .client-grid {
-    display: grid;
-    grid-template-columns: 1fr 400px;
-    gap: 2rem;
-    align-items: start;
-  }
-}
-
-/* ==========================================================================
    PANTALLA: DETALLE Y RESERVA (CASA MAR)
    ========================================================================== */
 
-/* Hero Image & Galería */
+/* Hero Image / Galería */
 .hero-container {
   position: relative;
   width: 100%;
@@ -442,6 +40,7 @@ h1, h2, h3, h4, .font-serif {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  font-size: 1.1rem;
 }
 
 .hero-actions-right {
@@ -465,7 +64,7 @@ h1, h2, h3, h4, .font-serif {
   gap: 0.3rem;
 }
 
-/* Información del Restaurante */
+/* Metadata e Información del Restaurante */
 .restaurant-meta-category {
   font-size: 0.75rem;
   font-weight: 700;
@@ -509,7 +108,13 @@ h1, h2, h3, h4, .font-serif {
   margin-bottom: 1.5rem;
 }
 
-/* Grid de Selectores (Fecha, Hora, Personas) */
+/* Sección Tu Reserva */
+.section-title-booking {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
 .booking-selectors-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -552,7 +157,7 @@ h1, h2, h3, h4, .font-serif {
   color: var(--text-dark);
 }
 
-/* Banner de Disponibilidad Confirmada */
+/* Banner de Disponibilidad */
 .availability-banner {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -579,6 +184,7 @@ h1, h2, h3, h4, .font-serif {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: bold;
 }
 
 .availability-status-title {
@@ -602,7 +208,7 @@ h1, h2, h3, h4, .font-serif {
   margin-bottom: 1.5rem;
 }
 
-/* CTA Principal Terracota */
+/* Botón CTA Terracota */
 .btn-cta-terracota {
   width: 100%;
   padding: 1.1rem;

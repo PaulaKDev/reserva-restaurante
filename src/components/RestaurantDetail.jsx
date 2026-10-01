@@ -1,10 +1,9 @@
 import React from 'react';
-import { useBooking } from '../context/BookingContext';
+import { useBooking } from '../context/useBooking';
 
 export default function RestaurantDetail() {
   const { 
     restaurantInfo, 
-    selectedDate, 
     selectedTime, 
     guests, 
     setCurrentStep 
@@ -12,7 +11,7 @@ export default function RestaurantDetail() {
 
   return (
     <div className="card-panel">
-      {/* 1. Galería de Fotos Superior */}
+      {/* 1. Imagen Superior / Galería */}
       <div className="hero-container">
         <img 
           src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80" 
@@ -31,9 +30,9 @@ export default function RestaurantDetail() {
         </div>
       </div>
 
-      {/* 2. Cabecera e Información */}
+      {/* 2. Cabecera e Información del Local */}
       <p className="restaurant-meta-category">
-        {restaurantInfo.cuisine.toUpperCase()} CONTEMPORÁNEA · {restaurantInfo.priceRange}
+        MEDITERRÁNEA CONTEMPORÁNEA · {restaurantInfo.priceRange}
       </p>
       
       <div className="restaurant-title-row">
@@ -48,7 +47,7 @@ export default function RestaurantDetail() {
       </p>
 
       {/* 3. Sección Tu Reserva */}
-      <h3 className="font-serif card-panel-title" style={{ marginTop: '1.5rem' }}>Tu reserva</h3>
+      <h3 className="font-serif section-title-booking">Tu reserva</h3>
 
       <div className="booking-selectors-grid">
         <div className="selector-card">
@@ -76,7 +75,7 @@ export default function RestaurantDetail() {
         </div>
       </div>
 
-      {/* 4. Banner de Disponibilidad */}
+      {/* 4. Estado de Disponibilidad */}
       <div className="availability-banner">
         <div className="availability-info">
           <div className="check-circle-icon">✓</div>
@@ -90,12 +89,12 @@ export default function RestaurantDetail() {
         <span className="selector-label">❯</span>
       </div>
 
-      {/* 5. Banner Política de Cancelación */}
+      {/* 5. Información de Política de Cancelación */}
       <div className="policy-banner">
-        🛡️️ Reserva flexible · Cancela sin coste hasta 6 h antes.
+        🛡 Reserva flexible · Cancela sin coste hasta 6 h antes.
       </div>
 
-      {/* 6. Botón CTA */}
+      {/* 6. Botón Principal CTA */}
       <button className="btn-cta-terracota" onClick={() => setCurrentStep('map')}>
         Elegir mesa en el salón ➔
       </button>
