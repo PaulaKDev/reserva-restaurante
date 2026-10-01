@@ -1,92 +1,96 @@
+// src/components/RestaurantMap.jsx
+
 import React from 'react';
 import { useBooking } from '../context/BookingContext';
-import { TABLES } from '../data/mockLayout';
 
 export default function RestaurantMap() {
-  const { 
-    selectedZone, 
-    selectedTable, 
-    setSelectedTable, 
-    getTableStatus, 
-    guests,
-    setIsModalOpen 
-  } = useBooking();
+  const { tablesStatus, selectedTable, setSelectedTable } = useBooking();
 
-  const zoneTables = TABLES.filter((t) => t.zone === selectedZone);
+  // Paleta exacta de Figma
+  const colors = {
+    disponibleFill: '#FFFFFF',
+    disponibleStroke: '#7A9A95',
+    ocupadaFill: '#E4D5C7',
+    ocupadaText: '#6B5B52',
+    seleccionadaFill: '#C17254',
+    seleccionadaText: '#FFFFFF',
+  };
 
-  const handleTableClick = (table, status, isCapacityValid) => {
-    if (status === 'ocupada' || !isCapacityValid) return;
-    setSelectedTable(table);
-    setIsModalOpen(true);
+  const renderTablesForZone = (zoneId) => {
+    return tablesStatus.filter(t => t.zone === zoneId).map((table) => {
+      const isSelected = selectedTable?.id === table.id;
+      let fill = colors.disponibleFill;
+      let stroke = colors.disponibleStroke;
+      let textColor = '#2B231F';
+
+      if (table.status === 'ocupada') {
+        fill = colors.ocupadaFill;
+        stroke = 'transparent';
+        textColor = colors.ocupadaText;
+      } else if (isSelected) {
+        fill = colors.seleccionadaFill;
+        stroke = 'transparent';
+        textColor = colors.seleccionadaText;
+      }
+
+      return (
+        <g
+          key={table.id}
+          onClick={() => table.status !== 'ocupada' && setSelectedTable(table)}
+          style={{ cursor: table.status !== 'ocupada' ? 'pointer' : 'not-allowed' }}
+        >
+          {table.shape === 'circle' ? (
+            <circle cx={table.x} cy={table.y} r={table.radius} fill={fill} stroke={stroke} strokeWidth="2" />
+          ) : (
+            <rect x={table.x} y={table.y} width={table.width} height={table.height} rx="10" fill={fill} stroke={stroke} strokeWidth="2" />
+          )}
+          <text
+            x={table.shape === 'circle' ? table.x : table.x + table.width / 2} 
+            y={table.shape === 'circle' ? table.y - 2 : table.y + table.height / 2 - 2} 
+            textAnchor="middle" fill={textColor} fontWeight="bold" fontSize="13"
+          >
+            {table.id}
+          </text>
+          <text
+            x={table.shape === 'circle' ? table.x : table.x + table.width / 2} 
+            y={table.shape === 'circle' ? table.y + 12 : table.y + table.height / 2 + 10} 
+            textAnchor="middle" fill={textColor} fontSize="10"
+          >
+            {table.seats} pers.
+          </text>
+        </g>
+      );
+    });
   };
 
   return (
     <div className="map-card">
-      <h3>Plano Interactivo - {selectedZone.toUpperCase()}</h3>
-      <div className="map-legend">
-        <span>🟢 Disponible</span>
-        <span>🔴 Ocupada</span>
-        <span>🟡 Seleccionada</span>
-        <span>⚪ Capacidad insuficiente</span>
+      <h2 className="font-serif" style={{ textAlign: 'center', marginBottom: '1rem' }}>Elige tu mesa</h2>
+
+      {/* Contenedor Salón Interior */}
+      <div className="zone-box salon">
+        <span className="zone-title">SALÓN INTERIOR</span>
+        <svg width="100%" height="220" viewBox="0 0 360 220">
+          {renderTablesForZone('salon')}
+        </svg>
       </div>
 
-      <svg width="550" height="350" className="map-svg">
-        <rect x="10" y="10" width="530" height="330" rx="15" fill="#f8f9fa" stroke="#e9ecef" strokeWidth="2" />
-        <text x="30" y="35" fill="#aaa" fontSize="12" fontWeight="bold">ENTRADA / RECEPCIÓN 🚪</text>
+      {/* Contenedor Terraza / Jardín */}
+      <div className="zone-box terraza">
+        <span className="zone-title">TERRAZA · VISTA AL JARDÍN</span>
+        <svg width="100%" height="130" viewBox="0 0 360 130">
+          {renderTablesForZone('terraza')}
+        </svg>
+      </div>
 
-        {zoneTables.map((table) => {
-          const status = getTableStatus(table.id);
-          const isCapacityValid = guests >= table.minSeats && guests <= table.maxSeats;
-          const isSelected = selectedTable?.id === table.id;
-
-          let fillColor = '#2ecc71';
-          if (status === 'ocupada') fillColor = '#e74c3c';
-          if (!isCapacityValid) fillColor = '#bdc3c7';
-          if (isSelected) fillColor = '#f1c40f';
-
-          const isClickable = status === 'disponible' && isCapacityValid;
-
-          return (
-            <g
-              key={table.id}
-              onClick={() => handleTableClick(table, status, isCapacityValid)}
-              className={`table-node ${isClickable ? 'available' : 'disabled'}`}
-            >
-              {table.shape === 'circle' ? (
-                <circle
-                  cx={table.x}
-                  cy={table.y}
-                  r={table.radius}
-                  fill={fillColor}
-                  stroke="#333"
-                  strokeWidth={isSelected ? 3 : 1}
-                />
-              ) : (
-                <rect
-                  x={table.x}
-                  y={table.y}
-                  width={table.width}
-                  height={table.height}
-                  rx="8"
-                  fill={fillColor}
-                  stroke="#333"
-                  strokeWidth={isSelected ? 3 : 1}
-                />
-              )}
-              <text
-                x={table.shape === 'circle' ? table.x : table.x + table.width / 2}
-                y={table.shape === 'circle' ? table.y + 4 : table.y + table.height / 2 + 4}
-                fill="#fff"
-                fontSize="11"
-                fontWeight="bold"
-                textAnchor="middle"
-              >
-                {table.id}
-              </text>
-            </g>
-          );
-        })}
-      </svg>
+      {selectedTable && (
+        <div style={{ background: '#F3EFEA', padding: '1rem', borderRadius: '12px', marginTop: '1rem' }}>
+          <strong>Mesa {selectedTable.id} · {selectedTable.seats} personas</strong>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+            {selectedTable.description || 'Zona tranquila'}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
