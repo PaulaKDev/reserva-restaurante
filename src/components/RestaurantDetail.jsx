@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useBooking } from '../context/useBooking';
 
 const formatDate = (date) => {
   const formattedDate = new Date(`${date}T12:00:00`);
+
+
 
   return new Intl.DateTimeFormat('es-ES', {
     weekday: 'short',
@@ -61,15 +63,25 @@ export default function RestaurantDetail() {
       <h3 className="font-serif section-title-booking">Tu reserva</h3>
 
       <div className="booking-selectors-grid">
-        <div className="selector-card">
-          <div className="selector-label-row">
-            <span className="selector-label">📅 FECHA</span>
-            <span className="selector-label">∨</span>
-          </div>
-          <span className="selector-value">
-            {formatDate(selectedDate)}
-          </span>
+        <button
+          type="button"
+          className="selector-card"
+          onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
+      >
+        {isDatePickerOpen && (
+          <div className="date-picker">
+            <p>Selecciona una fecha</p>
         </div>
+        )}
+  <div className="selector-label-row">
+    <span className="selector-label">📅 FECHA</span>
+    <span className="selector-label">∨</span>
+  </div>
+
+  <span className="selector-value">
+    {formatDate(selectedDate)}
+  </span>
+</button>
 
         <div className="selector-card">
           <div className="selector-label-row">
