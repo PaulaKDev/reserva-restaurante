@@ -1,19 +1,19 @@
 /* ==========================================================================
-   GUÍA DE ESTILOS Y SISTEMA DE DISEÑO (Figma: Casa Mar)
+   SISTEMA DE DISEÑO Y GUÍA DE ESTILOS (Casa Mar)
    ========================================================================== */
 
 :root {
-  /* --- PALETA DE COLORES --- */
+  /* --- PALETA DE COLORES (Figma) --- */
   --bg-main: #FBF9F5;              /* Crema de fondo principal */
-  --text-dark: #2B231F;            /* Marrón chocolate para textos y encabezados */
-  --text-muted: #6B5B52;           /* Texto secundario / gris cálido */
+  --text-dark: #2B231F;            /* Marrón chocolate para textos y títulos */
+  --text-muted: #6B5B52;           /* Texto secundario cálido */
   --accent-terracota: #C17254;     /* Terracota para acciones primarias y selección */
-  --accent-terracota-dark: #A35A3E;/* Terracota para hover */
+  --accent-terracota-dark: #A35A3E;/* Terracota para estados hover */
   
-  --bg-card: #FFFFFF;              /* Fondo de tarjetas */
-  --border-color: #EFE8DF;         /* Bordes suaves de contenedores */
+  --bg-card: #FFFFFF;              /* Fondo de tarjetas e interfaz */
+  --border-color: #EFE8DF;         /* Bordes finos y delimitadores */
   
-  /* --- ESTADOS DEL MAPA DE MESAS --- */
+  /* --- ESTADOS SVG DEL MAPA DE MESAS --- */
   --table-available-bg: #FFFFFF;
   --table-available-stroke: #7A9A95;
   --table-occupied-bg: #E4D5C7;
@@ -21,9 +21,9 @@
   --table-selected-bg: #C17254;
   --table-selected-text: #FFFFFF;
   
-  /* --- FONDOS DE ZONAS --- */
+  /* --- FONDOS DE CONTENEDORES DE ZONA --- */
   --zone-salon-bg: #F3EFEA;
-  --zone-terraza-bg: #EBF2EF;      /* Verde menta/arena suave */
+  --zone-terraza-bg: #EBF2EF;      /* Tono verdoso/arena suave */
 
   /* --- TIPOGRAFÍAS --- */
   --font-heading: 'Playfair Display', Georgia, serif;
@@ -55,7 +55,7 @@ h1, h2, h3, h4, .font-serif {
 }
 
 /* ==========================================================================
-   ESTRUCTURA DE LAYOUT Y CONTENEDORES
+   ESTRUCTURA Y CONTENEDORES
    ========================================================================== */
 
 .app-container {
@@ -80,8 +80,25 @@ h1, h2, h3, h4, .font-serif {
   margin-bottom: 1.5rem;
 }
 
+.card-panel-title {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.card-panel-title-center {
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.card-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
 /* ==========================================================================
-   ENCOBEZADO Y SELECTOR DE ENTORNO
+   HEADER Y SELECTOR DE ENTORNO MULTI-DISPOSITIVO
    ========================================================================== */
 
 .app-header {
@@ -121,7 +138,7 @@ h1, h2, h3, h4, .font-serif {
 }
 
 /* ==========================================================================
-   MAPA Y ZONAS DEL RESTAURANTE
+   MAPA SVG Y ESTADOS DE MESAS
    ========================================================================== */
 
 .zone-box {
@@ -148,7 +165,59 @@ h1, h2, h3, h4, .font-serif {
   text-transform: uppercase;
 }
 
-/* Información de mesa seleccionada */
+.map-svg-element {
+  width: 100%;
+}
+
+/* Agrupaciones e interactividad en SVG */
+.table-group.cursor-pointer {
+  cursor: pointer;
+}
+
+.table-group.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+/* Estado Disponible */
+.table-group.table-available .table-shape {
+  fill: var(--table-available-bg);
+  stroke: var(--table-available-stroke);
+  stroke-width: 2px;
+}
+
+.table-group.table-available text {
+  fill: var(--text-dark);
+}
+
+/* Estado Ocupada */
+.table-group.table-occupied .table-shape {
+  fill: var(--table-occupied-bg);
+  stroke: transparent;
+}
+
+.table-group.table-occupied text {
+  fill: var(--table-occupied-text);
+}
+
+/* Estado Seleccionada */
+.table-group.table-selected .table-shape {
+  fill: var(--table-selected-bg);
+  stroke: transparent;
+}
+
+.table-group.table-selected text {
+  fill: var(--table-selected-text);
+}
+
+.table-text-id {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.table-text-seats {
+  font-size: 10px;
+}
+
 .selected-info-box {
   background-color: var(--zone-salon-bg);
   padding: 1rem;
@@ -167,8 +236,14 @@ h1, h2, h3, h4, .font-serif {
   margin-top: 0.2rem;
 }
 
+.selection-summary-text {
+  margin: 0.5rem 0 1.5rem 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
 /* ==========================================================================
-   PAGO Y DESGLOSE TRANSPARENTE
+   DESGLOSE TRANSPARENTE Y PAGO
    ========================================================================== */
 
 .breakdown-box {
@@ -178,11 +253,16 @@ h1, h2, h3, h4, .font-serif {
   margin-bottom: 1.5rem;
 }
 
+.breakdown-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+}
+
 .breakdown-row {
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   color: var(--text-dark);
 }
 
@@ -202,8 +282,14 @@ h1, h2, h3, h4, .font-serif {
   color: var(--accent-terracota);
 }
 
+.payment-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
 /* ==========================================================================
-   CONTROL DE SALA (CAMAREROS) Y DASHBOARD (MANAGER)
+   VISTAS DE CAMAREROS Y MANAGER
    ========================================================================== */
 
 .staff-grid {
@@ -245,15 +331,22 @@ h1, h2, h3, h4, .font-serif {
   border-radius: 14px;
 }
 
-.stat-value {
+.stat-value-accent {
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--accent-terracota);
   margin-top: 0.3rem;
 }
 
+.stat-value-dark {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-top: 0.3rem;
+}
+
 /* ==========================================================================
-   BOTONES Y ACCIONES
+   BOTONES
    ========================================================================== */
 
 .btn-primary {
@@ -295,7 +388,7 @@ h1, h2, h3, h4, .font-serif {
 }
 
 /* ==========================================================================
-   DISEÑO RESPONSIVE (MÓVIL, TABLET Y PC)
+   RESPONSIVE
    ========================================================================== */
 
 @media (min-width: 900px) {
