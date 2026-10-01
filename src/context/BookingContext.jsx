@@ -1,7 +1,9 @@
+// src/context/BookingContext.jsx
+
 import React, { createContext, useContext, useState } from 'react';
 import { TABLES, RESTAURANT_INFO } from '../data/mockLayout';
 
-const BookingContext = createContext();
+export const BookingContext = createContext();
 
 export const BookingProvider = ({ children }) => {
   const [viewMode, setViewMode] = useState('client');
@@ -9,7 +11,7 @@ export const BookingProvider = ({ children }) => {
   const [selectedTime, setSelectedTime] = useState('21:00');
   const [guests, setGuests] = useState(2);
   const [selectedTable, setSelectedTable] = useState(TABLES.find(t => t.id === 'T6'));
-  const [currentStep, setCurrentStep] = useState('map');
+  const [currentStep, setCurrentStep] = useState('detail'); // 'detail' | 'map' | 'checkout'
 
   const [tablesStatus, setTablesStatus] = useState(TABLES);
 
@@ -43,5 +45,3 @@ export const BookingProvider = ({ children }) => {
     </BookingContext.Provider>
   );
 };
-
-export const useBooking = () => useContext(BookingContext);
