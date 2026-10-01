@@ -644,3 +644,20 @@ h1, h2, h3, h4, .font-serif {
 .calendar-grid span:not(:empty):hover {
   background: #f3e7dc;
 }
+
+.calendar-day {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.calendar-day.selected {
+  background: #c87552;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.calendar-day:disabled {
+  cursor: default;
+}

@@ -16,6 +16,7 @@ export default function RestaurantDetail() {
   const {
     restaurantInfo,
     selectedDate,
+    setSelectedDate,
     selectedTime,
     guests,
     setCurrentStep
@@ -45,6 +46,18 @@ export default function RestaurantDetail() {
   for (let day = 1; day <= daysInMonth; day++) {
     calendarDays.push(day);
   }
+  const goToPreviousMonth = () => {
+  setCalendarMonth(
+    new Date(year, month - 1, 1)
+  );
+};
+
+  const goToNextMonth = () => {
+    setCalendarMonth(
+      new Date(year, month + 1, 1)
+    );
+  };
+
   return (
     <div className="card-panel">
       {/* 1. Imagen Superior / Galería */}
@@ -86,77 +99,120 @@ export default function RestaurantDetail() {
 <h3 className="font-serif section-title-booking">Tu reserva</h3>
 
   <div className="booking-selectors-grid">
+
   <div className="date-selector-wrapper">
 
     <button
       type="button"
       className="selector-card"
       onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
-      
     >
-    <div className="selector-label-row">
-    <span className="selector-label">📅 FECHA</span>
-    <span className="selector-label">∨</span>
-  </div>
-
-  <span className="selector-value">
-    {formatDate(selectedDate)}
-  </span>
-</button>
-
-{isDatePickerOpen && (
-  <div className="date-picker">
-    <div className="calendar-header">
-  <button type="button">‹</button>
-
-  <strong>
-    {new Intl.DateTimeFormat('es-ES', {
-      month: 'long',
-      year: 'numeric',
-    }).format(calendarMonth)}
-  </strong>
-
-  <button type="button">›</button>
-</div>
-
-<div className="calendar-weekdays">
-  <span>L</span>
-  <span>M</span>
-  <span>X</span>
-  <span>J</span>
-  <span>V</span>
-  <span>S</span>
-  <span>D</span>
-</div>
-
-<div className="calendar-grid">
-  {calendarDays.map((day, index) => (
-    <span key={index}>
-      {day}
-    </span>
-  ))}
-</div>
-  </div>
-)}
-</div>
-
-        <div className="selector-card">
-          <div className="selector-label-row">
-            <span className="selector-label">⏰ HORA</span>
-            <span className="selector-label">∨</span>
-          </div>
-          <span className="selector-value">{selectedTime}</span>
-        </div>
-
-        <div className="selector-card">
-          <div className="selector-label-row">
-            <span className="selector-label">👥 PERSONAS</span>
-            <span className="selector-label">∨</span>
-          </div>
-          <span className="selector-value">{guests} comensales</span>
-        </div>
+      <div className="selector-label-row">
+        <span className="selector-label">📅 FECHA</span>
+        <span className="selector-label">∨</span>
       </div>
 
+      <span className="selector-value">
+        {formatDate(selectedDate)}
+      </span>
+    </button>
+
+    {isDatePickerOpen && (
+      <div className="date-picker">
+
+        <div className="calendar-header">
+          <button
+            type="button"
+            onClick={goToPreviousMonth}
+          >
+            ‹
+          </button>
+
+          <strong>
+            {new Intl.DateTimeFormat('es-ES', {
+              month: 'long',
+              year: 'numeric',
+            }).format(calendarMonth)}
+          </strong>
+
+          <button
+            type="button"
+            onClick={goToNextMonth}
+          >
+            ›
+          </button>
+        </div>
+
+        <div className="calendar-weekdays">
+          <span>L</span>
+          <span>M</span>
+          <span>X</span>
+          <span>J</span>
+          <span>V</span>
+          <span>S</span>
+          <span>D</span>
+        </div>
+
+        <div className="calendar-grid">
+          {calendarDays.map((day, index) => (
+            <button
+              key={index}
+              type="button"
+              disabled={day === null}
+              className={
+                day !== null &&
+                `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}` === selectedDate
+                  ? 'calendar-day selected'
+                  : 'calendar-day'
+              }
+              onClick={() => {
+                if (day === null) return;
+
+                const selected = new Date(year, month, day);
+
+                const formattedDate = [
+                  selected.getFullYear(),
+                  String(selected.getMonth() + 1).padStart(2, '0'),
+                  String(selected.getDate()).padStart(2, '0'),
+                ].join('-');
+
+                setSelectedDate(formattedDate);
+                setIsDatePickerOpen(false);
+              }}
+            >
+              {day}
+            </button>
+          ))}
+        </div>
+
+      </div>
+    )}
+
+  </div>
+
+  <div className="selector-card">
+    <div className="selector-label-row">
+      <span className="selector-label">⏰ HORA</span>
+      <span className="selector-label">∨</span>
+    </div>
+
+    <span className="selector-value">
+      {selectedTime}
+    </span>
+  </div>
+
+  <div className="selector-card">
+    <div className="selector-label-row">
+      <span className="selector-label">👥 PERSONAS</span>
+      <span className="selector-label">∨</span>
+    </div>
+
+    <span className="selector-value">
+      {guests} comensales
+    </span>
+  </div>
+
+</div>
       {/* 4. Estado de Disponibilidad */}
       <div className="availability-banner">
         <div className="availability-info">
