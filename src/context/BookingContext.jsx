@@ -5,6 +5,14 @@ import { TABLES, RESTAURANT_INFO } from '../data/mockLayout';
 
 export const BookingContext = createContext();
 
+export const useBooking = () => {
+  const context = useContext(BookingContext);
+  if (!context) {
+    throw new Error('useBooking debe usarse dentro de un BookingProvider');
+  }
+  return context;
+};
+
 export const BookingProvider = ({ children }) => {
   const [viewMode, setViewMode] = useState('client');
   const [selectedDate, setSelectedDate] = useState('2026-10-17');
