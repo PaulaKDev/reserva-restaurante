@@ -4,24 +4,47 @@ import { useBooking } from '../context/useBooking';
 const formatDate = (date) => {
   const formattedDate = new Date(`${date}T12:00:00`);
 
-
-
   return new Intl.DateTimeFormat('es-ES', {
     weekday: 'short',
     day: 'numeric',
     month: 'short',
   }).format(formattedDate);
+
 };
 
 export default function RestaurantDetail() {
   const {
-  restaurantInfo,
-  selectedDate,
-  selectedTime,
-  guests,
-  setCurrentStep
-} = useBooking();
+    restaurantInfo,
+    selectedDate,
+    selectedTime,
+    guests,
+    setCurrentStep
+  } = useBooking();
 
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+
+  const [calendarMonth, setCalendarMonth] = useState(
+    new Date(`${selectedDate}T12:00:00`)
+  );
+
+  const year = calendarMonth.getFullYear();
+  const month = calendarMonth.getMonth();
+
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const firstDayOfMonth = new Date(year, month, 1).getDay();
+
+  const startingDay = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
+
+  const calendarDays = [];
+
+  for (let i = 0; i < startingDay; i++) {
+    calendarDays.push(null);
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    calendarDays.push(day);
+  }
   return (
     <div className="card-panel">
       {/* 1. Imagen Superior / Galería */}
@@ -59,21 +82,19 @@ export default function RestaurantDetail() {
         📍 {restaurantInfo.address}
       </p>
 
-      {/* 3. Sección Tu Reserva */}
-      <h3 className="font-serif section-title-booking">Tu reserva</h3>
+{/* 3. Sección Tu Reserva */}
+<h3 className="font-serif section-title-booking">Tu reserva</h3>
 
-      <div className="booking-selectors-grid">
-        <button
-          type="button"
-          className="selector-card"
-          onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
-      >
-        {isDatePickerOpen && (
-          <div className="date-picker">
-            <p>Selecciona una fecha</p>
-        </div>
-        )}
-  <div className="selector-label-row">
+  <div className="booking-selectors-grid">
+  <div className="date-selector-wrapper">
+
+    <button
+      type="button"
+      className="selector-card"
+      onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
+      
+    >
+    <div className="selector-label-row">
     <span className="selector-label">📅 FECHA</span>
     <span className="selector-label">∨</span>
   </div>
@@ -82,6 +103,42 @@ export default function RestaurantDetail() {
     {formatDate(selectedDate)}
   </span>
 </button>
+
+{isDatePickerOpen && (
+  <div className="date-picker">
+    <div className="calendar-header">
+  <button type="button">‹</button>
+
+  <strong>
+    {new Intl.DateTimeFormat('es-ES', {
+      month: 'long',
+      year: 'numeric',
+    }).format(calendarMonth)}
+  </strong>
+
+  <button type="button">›</button>
+</div>
+
+<div className="calendar-weekdays">
+  <span>L</span>
+  <span>M</span>
+  <span>X</span>
+  <span>J</span>
+  <span>V</span>
+  <span>S</span>
+  <span>D</span>
+</div>
+
+<div className="calendar-grid">
+  {calendarDays.map((day, index) => (
+    <span key={index}>
+      {day}
+    </span>
+  ))}
+</div>
+  </div>
+)}
+</div>
 
         <div className="selector-card">
           <div className="selector-label-row">
