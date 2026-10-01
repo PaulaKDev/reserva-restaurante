@@ -1,5 +1,3 @@
-// src/data/mockLayout.js
-
 export const RESTAURANT_INFO = {
   name: 'Casa Mar',
   subtitle: 'Cocina de costa',
