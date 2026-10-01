@@ -566,3 +566,81 @@ h1, h2, h3, h4, .font-serif {
     padding-bottom: 0.7rem;
   }
 }
+
+/* =========================
+   CALENDARIO DE RESERVA
+   ========================= */
+
+.date-selector-wrapper {
+  position: relative;
+}
+
+.date-picker {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 300px;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e8ded5;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  z-index: 20;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.calendar-header strong {
+  text-transform: capitalize;
+  font-size: 16px;
+}
+
+.calendar-header button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e8ded5;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.calendar-weekdays,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.calendar-weekdays {
+  margin-bottom: 8px;
+}
+
+.calendar-weekdays span {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #8a8179;
+}
+
+.calendar-grid span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  font-size: 13px;
+  border-radius: 50%;
+}
+
+.calendar-grid span:not(:empty) {
+  cursor: pointer;
+}
+
+.calendar-grid span:not(:empty):hover {
+  background: #f3e7dc;
+}
