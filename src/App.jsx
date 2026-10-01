@@ -1,5 +1,3 @@
-// src/App.jsx
-
 import React from 'react';
 import { useBooking } from './context/BookingContext';
 import Header from './components/Header';
@@ -20,9 +18,9 @@ export default function App() {
             {currentStep === 'map' ? (
               <>
                 <RestaurantMap />
-                <div className="map-card">
-                  <h3 className="font-serif" style={{ marginBottom: '0.8rem' }}>Resumen de tu selección</h3>
-                  <p style={{ margin: '0.5rem 0 1.5rem 0', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                <div className="card-panel">
+                  <h3 className="font-serif">Resumen de tu selección</h3>
+                  <p className="selection-summary-text">
                     Has seleccionado la Mesa T6 en la Terraza.
                   </p>
                   <button className="btn-primary" onClick={() => setCurrentStep('checkout')}>
