@@ -1,4 +1,39 @@
-/* Reset y Estilos Base */
+/* ==========================================================================
+   GUÍA DE ESTILOS Y SISTEMA DE DISEÑO (Figma: Casa Mar)
+   ========================================================================== */
+
+:root {
+  /* --- PALETA DE COLORES --- */
+  --bg-main: #FBF9F5;              /* Crema de fondo principal */
+  --text-dark: #2B231F;            /* Marrón chocolate para textos y encabezados */
+  --text-muted: #6B5B52;           /* Texto secundario / gris cálido */
+  --accent-terracota: #C17254;     /* Terracota para acciones primarias y selección */
+  --accent-terracota-dark: #A35A3E;/* Terracota para hover */
+  
+  --bg-card: #FFFFFF;              /* Fondo de tarjetas */
+  --border-color: #EFE8DF;         /* Bordes suaves de contenedores */
+  
+  /* --- ESTADOS DEL MAPA DE MESAS --- */
+  --table-available-bg: #FFFFFF;
+  --table-available-stroke: #7A9A95;
+  --table-occupied-bg: #E4D5C7;
+  --table-occupied-text: #6B5B52;
+  --table-selected-bg: #C17254;
+  --table-selected-text: #FFFFFF;
+  
+  /* --- FONDOS DE ZONAS --- */
+  --zone-salon-bg: #F3EFEA;
+  --zone-terraza-bg: #EBF2EF;      /* Verde menta/arena suave */
+
+  /* --- TIPOGRAFÍAS --- */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ==========================================================================
+   RESET Y REGLAS BASE
+   ========================================================================== */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,241 +41,268 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f2f5;
-  color: #333;
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  font-family: var(--font-body);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
+
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-heading);
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   ESTRUCTURA DE LAYOUT Y CONTENEDORES
+   ========================================================================== */
 
 .app-container {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .main-content {
-  max-width: 1000px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
 }
 
-/* Header */
+.card-panel {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 16px rgba(43, 35, 31, 0.03);
+  margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   ENCOBEZADO Y SELECTOR DE ENTORNO
+   ========================================================================== */
+
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: #1a1a2e;
-  color: #ffffff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem 1.5rem;
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
 }
 
-.toggle-admin-btn {
-  padding: 0.6rem 1.2rem;
-  color: #ffffff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: opacity 0.2s ease;
-}
-
-.toggle-admin-btn:hover {
-  opacity: 0.9;
-}
-
-.toggle-admin-btn.admin-mode {
-  background-color: #e74c3c;
-}
-
-.toggle-admin-btn.client-mode {
-  background-color: #2ecc71;
-}
-
-/* Filtros */
-.filters-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  align-items: center;
-  padding: 1.2rem 2rem;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  margin-bottom: 1.5rem;
-}
-
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.filter-group label {
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.filter-input {
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 0.95rem;
-}
-
-.zone-tabs {
+.mode-selector {
   display: flex;
   gap: 0.5rem;
-  margin-left: auto;
+  background-color: var(--bg-main);
+  padding: 0.3rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
 }
 
-.zone-tab-btn {
-  padding: 0.6rem 1rem;
+.mode-btn {
+  padding: 0.5rem 0.9rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 7px;
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: bold;
-  background-color: #f0f2f5;
-  color: #333;
+  background: transparent;
+  color: var(--text-muted);
   transition: all 0.2s ease;
 }
 
-.zone-tab-btn.active {
-  background-color: #4a90e2;
-  color: #ffffff;
+.mode-btn.active {
+  background-color: var(--accent-terracota);
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(193, 114, 84, 0.3);
 }
 
-/* Mapa Interactivo */
-.map-card {
-  background-color: #ffffff;
-  padding: 1.5rem;
+/* ==========================================================================
+   MAPA Y ZONAS DEL RESTAURANTE
+   ========================================================================== */
+
+.zone-box {
+  border-radius: 16px;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.zone-box.salon {
+  background-color: var(--zone-salon-bg);
+}
+
+.zone-box.terraza {
+  background-color: var(--zone-terraza-bg);
+}
+
+.zone-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 0.8rem;
+  display: block;
+  text-transform: uppercase;
+}
+
+/* Información de mesa seleccionada */
+.selected-info-box {
+  background-color: var(--zone-salon-bg);
+  padding: 1rem;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-top: 1rem;
+}
+
+.selected-info-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.selected-info-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+/* ==========================================================================
+   PAGO Y DESGLOSE TRANSPARENTE
+   ========================================================================== */
+
+.breakdown-box {
+  background-color: var(--zone-salon-bg);
+  padding: 1.2rem;
+  border-radius: 14px;
+  margin-bottom: 1.5rem;
+}
+
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+
+.breakdown-divider {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 0.8rem 0;
+}
+
+.breakdown-row.total {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.total-price {
+  font-size: 1.25rem;
+  color: var(--accent-terracota);
+}
+
+/* ==========================================================================
+   CONTROL DE SALA (CAMAREROS) Y DASHBOARD (MANAGER)
+   ========================================================================== */
+
+.staff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.staff-card {
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
   text-align: center;
 }
 
-.map-legend {
+.staff-card.occupied {
+  background-color: var(--table-occupied-bg);
+}
+
+.staff-status-text {
+  font-size: 0.8rem;
+  margin: 0.4rem 0;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.dashboard-stats {
   display: flex;
-  justify-content: center;
-  gap: 1.2rem;
-  margin: 1rem 0;
-  font-size: 0.85rem;
+  gap: 1rem;
+  margin: 1.5rem 0;
 }
 
-.map-svg {
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  background-color: #f8f9fa;
-  max-width: 100%;
-  height: auto;
+.stat-box {
+  flex: 1;
+  background-color: var(--zone-salon-bg);
+  padding: 1.2rem;
+  border-radius: 14px;
 }
 
-.table-node {
-  transition: transform 0.2s ease, fill 0.2s ease;
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-terracota);
+  margin-top: 0.3rem;
 }
 
-.table-node.available {
-  cursor: pointer;
-}
+/* ==========================================================================
+   BOTONES Y ACCIONES
+   ========================================================================== */
 
-.table-node.available:hover {
-  filter: brightness(1.1);
-}
-
-.table-node.disabled {
-  cursor: not-allowed;
-}
-
-/* Modal de Reserva */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background-color: #ffffff;
-  padding: 2rem;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 450px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.booking-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  margin-top: 1rem;
-}
-
-.booking-form textarea {
-  min-height: 70px;
-  resize: vertical;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.btn-cancel {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #e74c3c;
-  color: #ffffff;
-}
-
-.btn-confirm {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #2ecc71;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-/* Panel de Administración */
-.admin-card {
-  background-color: #ffffff;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.admin-table {
+.btn-primary {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-.admin-table th {
-  background-color: #1a1a2e;
-  color: #ffffff;
-  padding: 0.75rem;
-  text-align: left;
-}
-
-.admin-table td {
-  padding: 0.75rem;
-  border-bottom: 1px solid #eee;
-}
-
-.btn-delete {
-  padding: 0.3rem 0.6rem;
-  background-color: #e74c3c;
-  color: #ffffff;
+  padding: 1rem;
+  background-color: var(--text-dark);
+  color: #FFFFFF;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #000000;
+}
+
+.btn-action-sm {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.75rem;
+  border-radius: 6px;
+  border: none;
+  background-color: var(--accent-terracota);
+  color: #FFFFFF;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-link {
+  width: 100%;
+  background: transparent;
+  border: none;
+  margin-top: 1rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   DISEÑO RESPONSIVE (MÓVIL, TABLET Y PC)
+   ========================================================================== */
+
+@media (min-width: 900px) {
+  .client-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 2rem;
+    align-items: start;
+  }
 }
