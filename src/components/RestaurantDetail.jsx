@@ -20,11 +20,13 @@ export default function RestaurantDetail() {
     selectedTime,
     setSelectedTime,
     guests,
+    setGuests,
     setCurrentStep
   } = useBooking();
 
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
+  const [isGuestsPickerOpen, setIsGuestsPickerOpen] = useState(false);
 
   const [calendarMonth, setCalendarMonth] = useState(
     new Date(`${selectedDate}T12:00:00`)
@@ -233,8 +235,13 @@ export default function RestaurantDetail() {
   </div>
 
   {/* PERSONAS */}
-  <div className="selector-card">
+<div className="guests-selector-wrapper">
 
+  <button
+    type="button"
+    className="selector-card"
+    onClick={() => setIsGuestsPickerOpen(!isGuestsPickerOpen)}
+  >
     <div className="selector-label-row">
       <span className="selector-label">👥 PERSONAS</span>
       <span className="selector-label">∨</span>
@@ -243,9 +250,27 @@ export default function RestaurantDetail() {
     <span className="selector-value">
       {guests} comensales
     </span>
+  </button>
 
+  {isGuestsPickerOpen && (
+    <div className="guests-picker">
+
+      {[1, 2, 3, 4, 5, 6, 7, 8].map((number) => (
+        <button
+          key={number}
+          type="button"
+          onClick={() => {
+            setGuests(number);
+            setIsGuestsPickerOpen(false);
+          }}
+        >
+          {number} {number === 1 ? 'persona' : 'personas'}
+        </button>
+      ))}
+
+    </div>
+  )}
   </div>
-
 </div>
       {/* 4. Estado de Disponibilidad */}
       <div className="availability-banner">
