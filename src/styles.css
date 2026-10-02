@@ -628,20 +628,18 @@ h1, h2, h3, h4, .font-serif {
   color: #8a8179;
 }
 
-.calendar-grid span {
+.calendar-grid button {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 34px;
   height: 34px;
+  margin: auto;
   font-size: 13px;
   border-radius: 50%;
 }
 
-.calendar-grid span:not(:empty) {
-  cursor: pointer;
-}
-
-.calendar-grid span:not(:empty):hover {
+.calendar-day:hover:not(:disabled) {
   background: #f3e7dc;
 }
 
