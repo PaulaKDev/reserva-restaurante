@@ -18,6 +18,7 @@ export default function RestaurantDetail() {
     selectedDate,
     setSelectedDate,
     selectedTime,
+    setSelectedTime,
     guests,
     setCurrentStep
   } = useBooking();
@@ -210,16 +211,24 @@ export default function RestaurantDetail() {
       </span>
     </button>
 
-    {isTimePickerOpen && (
-      <div className="time-picker">
-        <button type="button">20:00</button>
-        <button type="button">20:30</button>
-        <button type="button">21:00</button>
-        <button type="button">21:30</button>
-        <button type="button">22:00</button>
-        <button type="button">22:30</button>
-      </div>
-    )}
+  {isTimePickerOpen && (
+  <div className="time-picker">
+
+    {['20:00', '20:30', '21:00', '21:30', '22:00', '22:30'].map((time) => (
+      <button
+        key={time}
+        type="button"
+        onClick={() => {
+          setSelectedTime(time);
+          setIsTimePickerOpen(false);
+        }}
+      >
+        {time}
+      </button>
+    ))}
+
+  </div>
+)}
 
   </div>
 
