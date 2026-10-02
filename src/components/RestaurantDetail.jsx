@@ -23,6 +23,7 @@ export default function RestaurantDetail() {
   } = useBooking();
 
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
 
   const [calendarMonth, setCalendarMonth] = useState(
     new Date(`${selectedDate}T12:00:00`)
@@ -98,8 +99,9 @@ export default function RestaurantDetail() {
 {/* 3. Sección Tu Reserva */}
 <h3 className="font-serif section-title-booking">Tu reserva</h3>
 
-  <div className="booking-selectors-grid">
+<div className="booking-selectors-grid">
 
+  {/* FECHA */}
   <div className="date-selector-wrapper">
 
     <button
@@ -190,18 +192,40 @@ export default function RestaurantDetail() {
 
   </div>
 
-  <div className="selector-card">
-    <div className="selector-label-row">
-      <span className="selector-label">⏰ HORA</span>
-      <span className="selector-label">∨</span>
-    </div>
+  {/* HORA */}
+  <div className="time-selector-wrapper">
 
-    <span className="selector-value">
-      {selectedTime}
-    </span>
+    <button
+      type="button"
+      className="selector-card"
+      onClick={() => setIsTimePickerOpen(!isTimePickerOpen)}
+    >
+      <div className="selector-label-row">
+        <span className="selector-label">⏰ HORA</span>
+        <span className="selector-label">∨</span>
+      </div>
+
+      <span className="selector-value">
+        {selectedTime}
+      </span>
+    </button>
+
+    {isTimePickerOpen && (
+      <div className="time-picker">
+        <button type="button">20:00</button>
+        <button type="button">20:30</button>
+        <button type="button">21:00</button>
+        <button type="button">21:30</button>
+        <button type="button">22:00</button>
+        <button type="button">22:30</button>
+      </div>
+    )}
+
   </div>
 
+  {/* PERSONAS */}
   <div className="selector-card">
+
     <div className="selector-label-row">
       <span className="selector-label">👥 PERSONAS</span>
       <span className="selector-label">∨</span>
@@ -210,6 +234,7 @@ export default function RestaurantDetail() {
     <span className="selector-value">
       {guests} comensales
     </span>
+
   </div>
 
 </div>
